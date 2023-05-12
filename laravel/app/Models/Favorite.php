@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Favorite extends Model
 {
+    public $timestamps = false;
     use HasFactory;
+    protected $table = 'favoritos';
+    protected $fillable = [
+        'user_id',
+        'id_peliserie'
+    ];
 }

@@ -14,15 +14,17 @@ return new class extends Migration
     public function up()
 {
     Schema::create('favoritos', function (Blueprint $table) {
-        $table->id();
         $table->unsignedBigInteger('user_id');
-        $table->unsignedBigInteger('category_id')->nullable();
-        $table->timestamps();
+        $table->unsignedBigInteger('id_peliserie');
 
         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        $table->foreign('category_id')->references('id')->on('categories');
-
     });
+
+    Schema::table('favoritos', function (Blueprint $table) {
+        $table->id()->first();
+        $table->unique(['user_id', 'id_peliserie']);
+    });
+    
 }
 
     /**
