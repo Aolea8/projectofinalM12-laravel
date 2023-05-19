@@ -15,7 +15,11 @@ class FavoriteController extends Controller
      */
     public function index()
     {
-        //
+        $favoritos = auth()->user()->favorites;    
+        return response()->json([
+            'success' => true,
+            'data'    => $favoritos
+        ], 200);
     }
 
     public function favorite($id)

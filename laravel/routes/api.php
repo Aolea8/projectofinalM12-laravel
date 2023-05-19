@@ -22,4 +22,5 @@ Route::post('/logout', [TokenController::class, 'logout'])->middleware('auth:san
 Route::get('/user', [TokenController::class, 'user'])->middleware('auth:sanctum');
 Route::post('/favorite/{movieserie}', [FavoriteController::class, 'favorite'])->middleware('auth:sanctum');
 Route::delete('/unfavorite/{movieserie}', [FavoriteController::class, 'unfavorite'])->middleware('auth:sanctum');
+Route::get('/user/favorites', [FavoriteController::class, 'index'])->middleware('auth:sanctum');
 

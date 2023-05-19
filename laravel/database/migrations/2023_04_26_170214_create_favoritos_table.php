@@ -16,6 +16,7 @@ return new class extends Migration
     Schema::create('favoritos', function (Blueprint $table) {
         $table->unsignedBigInteger('user_id');
         $table->unsignedBigInteger('id_peliserie');
+        $table->Enum('tipo', ['pelicula', 'serie']);
 
         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
     });
