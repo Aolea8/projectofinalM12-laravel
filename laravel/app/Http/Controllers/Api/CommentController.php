@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 
 class CommentController extends Controller
 {
@@ -10,7 +12,7 @@ class CommentController extends Controller
         $validatedData = $request->validate([
             'comment'  => 'required|string',
         ]);
-        if (Comment::where('user_id',auth()->user()->id)->where('post_id', $id )->first()){
+        if (Comment::where('user_id',auth()->user()->id)->where('id_peliserie', $id )->first()){
             return response()->json([
                 'success'  => false,
                 'message' => "ERROR you can't comment the same post two timest"
