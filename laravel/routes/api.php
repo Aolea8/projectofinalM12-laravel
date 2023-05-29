@@ -26,5 +26,5 @@ Route::delete('/unfavorite/{movieserie}', [FavoriteController::class, 'unfavorit
 Route::get('/user/favorites', [FavoriteController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/peliserie/{idpeliserie}/comments', [CommentController::class, 'comments']);
 Route::post('/peliserie/{idpeliserie}/comment', [CommentController::class, 'comment'])->middleware(['auth:sanctum']);
-Route::delete('/peliserie/{idpeliserie}/comment/{comment}', [CommentController::class, 'uncomment'])->middleware(['auth:sanctum']);
+Route::delete('/peliserie/uncomment/{comment}', [CommentController::class, 'uncomment'])->middleware(['auth:sanctum']);
 
