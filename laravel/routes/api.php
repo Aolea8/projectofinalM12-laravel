@@ -24,6 +24,7 @@ Route::get('/user', [TokenController::class, 'user'])->middleware('auth:sanctum'
 Route::post('/favorite/{movieserie}', [FavoriteController::class, 'favorite'])->middleware('auth:sanctum');
 Route::delete('/unfavorite/{movieserie}', [FavoriteController::class, 'unfavorite'])->middleware('auth:sanctum');
 Route::get('/user/favorites', [FavoriteController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/peliserie/{idpeliserie}/comments', [CommentController::class, 'comments']);
 Route::post('/peliserie/{idpeliserie}/comment', [CommentController::class, 'comment'])->middleware(['auth:sanctum']);
 Route::delete('/peliserie/{idpeliserie}/comment/{comment}', [CommentController::class, 'uncomment'])->middleware(['auth:sanctum']);
 

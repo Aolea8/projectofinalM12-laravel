@@ -9,6 +9,16 @@ use App\Models\Comment;
 
 class CommentController extends Controller
 {
+
+    public function comments($id)
+    {
+        $comments = Comment::where('id_peliserie', $id )->first();
+        return response()->json([
+            'success' => true,
+            'data'    => $comments
+        ], 200);
+    }
+
     public function comment($id, Request $request){
         $validatedData = $request->validate([
             'comment'  => 'required|string',
