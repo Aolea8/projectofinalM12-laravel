@@ -20,6 +20,7 @@ return new class extends Migration
                   ->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('id_peliserie');
             $table->string('comment',255);
+            $table->timestamps();
         });
     }
 
