@@ -12,7 +12,7 @@ class CommentController extends Controller
 
     public function comments($id)
     {
-        $comments = Comment::where('id_peliserie', $id )->get();
+        $comments = Comment::where('id_peliserie', $id)->with('user')->get();
         return response()->json([
             'success' => true,
             'data'    => $comments

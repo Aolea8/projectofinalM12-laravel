@@ -20,4 +20,9 @@ class Comment extends Model
         return $user->name;
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
