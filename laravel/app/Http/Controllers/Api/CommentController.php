@@ -6,33 +6,54 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function comment(Request $request, Post $post){
+    public function comment($id, Request $request){
         $validatedData = $request->validate([
-            'pcomment'  => 'required',
+            'comment'  => 'required|string',
         ]);
-        $repetido = Comment::where('user_id',auth()->user()->id)->where('id_peliserie', $post->id )->where('comment',$request->input('pcomment'))->first();
-        if ($repetido){
-            return redirect()->route('details', $post)
-            ->with('error', __('fpp.post-comment-error'));
+        if (Comment::where('user_id',auth()->user()->id)->where('post_id', $id )->first()){
+            return response()->json([
+                'success'  => false,
+                'message' => "ERROR you can't comment the same post two timest"
+            ], 500);
         }else{
             $comment = Comment::create([
                 'user_id' => auth()->user()->id,
-                'id_peliserie' => $post->id,
-                'comment' =>$request->input('pcomment'),
+                'id_peliserie' => $id,
+                'comment' =>$request->input('comment'),
             ]);
-            return redirect()->back()
-            ->with('success', __('fpp.post-comment'));
+            return response()->json([
+                'success' => true,
+                'data'    => $comment,
+            ], 201);
         }
     }
 
-    public function uncomment(Post $post, Comment $comment){
-        if ($post->user_id == auth()->user()->id || auth()->user()->hasRole(['admin']) || $comment->user_id == auth()->user()->id ){
-            $comment->delete();
-            return redirect()->route('posts.show', $post)
-                ->with('success', __('fpp.post-uncomment'));
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+    */
+    public function uncomment($id){
+        $comment = Comment::find($id);
+        if ($comment){
+            if ( $comment->user_id == auth()->user()->id ){
+                $comment->delete();
+                return response()->json([
+                    'success' => true,
+                    'data'    => "Comment deleted successfully"
+                ], 200);
+            }else{
+                return response()->json([
+                    'success'  => false,
+                    'message' => "ERROR, you can not delete a comment that is not yours"
+                ], 500);
+            }
         }else{
-            return redirect()->route('posts.show', $post)
-            ->with('error', __('fpp.post-uncomment-error'));
+            return response()->json([
+                'success'  => false,
+                'message' => "Comment not found"
+            ], 404);
         }
     }
 }
