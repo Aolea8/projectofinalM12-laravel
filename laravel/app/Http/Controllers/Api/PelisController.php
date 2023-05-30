@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Pelis;
+use App\Models\Peli;
 
 class PelisController extends Controller
 {
@@ -15,7 +15,7 @@ class PelisController extends Controller
      */
     public function index()
     {
-        $pelis = Pelis::all();
+        $pelis = Peli::all();
         return response()->json([
             'success' => true,
             'data'    => $pelis,
@@ -35,7 +35,7 @@ class PelisController extends Controller
             'url'      => 'required'
         ]);
 
-        $Peli = Pelis::create([
+        $Peli = Peli::create([
             'id_peliserie' =>$request->input('id_peliserie'),
             'url' =>$request->input('url')
         ]);
@@ -54,7 +54,7 @@ class PelisController extends Controller
      */
     public function show($id)
     {
-        $pelis = Pelis::where('id_peliserie', $id)->first();
+        $pelis = Peli::where('id_peliserie', $id)->first();
         return response()->json([
             'success' => true,
             'data'    => $pelis
@@ -74,7 +74,7 @@ class PelisController extends Controller
             'id_peliserie'  => 'sometimes|required|numeric',
             'url'           => 'sometimes|required',
         ]);
-        $peli = Pelis::find($id);
+        $peli = Peli::find($id);
         if ($peli) {
             $peli->fill(array_filter($request->only([
                 'id_peliserie',
@@ -102,9 +102,9 @@ class PelisController extends Controller
      */
     public function destroy($id)
     {
-        $peli = Pelis::find($id);
+        $peli = Peli::find($id);
         if ($peli){
-            Pelis::destroy($id);
+            Peli::destroy($id);
             return response()->json([
                 'success' => true,
                 'message'    => "Peli eliminada correctamente"
