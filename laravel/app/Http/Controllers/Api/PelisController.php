@@ -40,8 +40,8 @@ class PelisController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'id_peliserie'  => 'required|numeric',
-            'url'           => 'required',
+            'id_peliserie' => 'required|numeric',
+            'file' => 'required|mimes:mp4', 
         ]);
         
         $peliExist = Pelis::where('id_peliserie', $request->input('id_peliserie'))->first();
@@ -52,15 +52,20 @@ class PelisController extends Controller
             ], 400);
         }
         
+        $file = $request->file('file');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        
+        $file->storeAs('public', $fileName); 
+        
         $peli = Pelis::create([
-            'id_peliserie' =>$request->input('id_peliserie'),
-            'url' =>$request->input('url'),
+            'id_peliserie' => $request->input('id_peliserie'),
+            'url' => asset('storage/' . $fileName),
         ]);
         
         return response()->json([
             'success' => true,
-            'data'    => $peli
-        ], 201); 
+            'data' => $peli
+        ], 201);
     }
 
     /**
