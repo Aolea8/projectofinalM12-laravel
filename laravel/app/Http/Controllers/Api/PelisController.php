@@ -49,10 +49,7 @@ class PelisController extends Controller
             'url' => $request->input('url'),
         ]);
         $peli->save();
-        return response()->json([
-            'success' => true,
-            'data'    => $peli
-        ], 200);
+        
     }
 
     /**
