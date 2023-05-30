@@ -18,7 +18,8 @@ class PelisController extends Controller
         $pelis = Pelis::all();
         return response()->json([
             'success' => true,
-            'data'    => $pelis
+            'data'    => $pelis,
+            'message' => "hola"
         ], 200);
     }
 
