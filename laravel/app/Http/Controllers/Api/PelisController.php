@@ -32,11 +32,11 @@ class PelisController extends Controller
     {
         $validatedData = $request->validate([
             'id_peliserie' => 'required|numeric',
-            'file' => 'required|mimes:mp4',
+            'url' => 'required',
         ]);
     
         $peliExist = Peli::where('id_peliserie', $request->input('id_peliserie'))->first();
-        
+
         if ($peliExist) {
             return response()->json([
                 'success' => false,
