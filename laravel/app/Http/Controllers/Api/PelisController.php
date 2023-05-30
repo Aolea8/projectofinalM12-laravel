@@ -57,13 +57,15 @@ class PelisController extends Controller
         $file = $request->file('file');
         $fileName = time() . '_' . $file->getClientOriginalName();
         
-        $file->storeAs('public', $fileName); 
+        $file->storeAs('public', $fileName);
+        
+        $url = Storage::url($fileName); // Obtener la URL completa del archivo
         
         $peli = Pelis::create([
             'id_peliserie' => $request->input('id_peliserie'),
-            'url' => asset('storage/' . $fileName),
+            'url' => $url,
         ]);
-        $peli->save();
+        
         return response()->json([
             'success' => true,
             'data' => $peli
