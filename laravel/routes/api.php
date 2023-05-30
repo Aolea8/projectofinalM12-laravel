@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\TokenController;
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\PelisController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +29,6 @@ Route::get('/user/favorites', [FavoriteController::class, 'index'])->middleware(
 Route::get('/peliserie/{idpeliserie}/comments', [CommentController::class, 'comments']);
 Route::post('/peliserie/{idpeliserie}/comment', [CommentController::class, 'comment'])->middleware(['auth:sanctum']);
 Route::delete('/peliserie/uncomment/{comment}', [CommentController::class, 'uncomment'])->middleware(['auth:sanctum']);
+Route::apiResource('pelis', PelisController::class)->middleware(['auth:sanctum']);
+
 
