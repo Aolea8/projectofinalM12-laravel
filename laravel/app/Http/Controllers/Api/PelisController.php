@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Pelis;
+use Illuminate\Support\Facades\Storage;
+
 
 class PelisController extends Controller
 {
