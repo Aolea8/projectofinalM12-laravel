@@ -29,6 +29,9 @@ Route::get('/user/favorites', [FavoriteController::class, 'index'])->middleware(
 Route::get('/peliserie/{idpeliserie}/comments', [CommentController::class, 'comments']);
 Route::post('/peliserie/{idpeliserie}/comment', [CommentController::class, 'comment'])->middleware(['auth:sanctum']);
 Route::delete('/peliserie/uncomment/{comment}', [CommentController::class, 'uncomment'])->middleware(['auth:sanctum']);
-Route::apiResource('pelis', PelisController::class)->middleware(['auth:sanctum']);
-
+Route::post('/videos', [PelisController::class, 'store'])->middleware(['auth:sanctum']);
+Route::put('/videos/{peli}', [PelisController::class, 'update'])->middleware(['auth:sanctum']);
+Route::delete('/videos/{peli}', [PelisController::class, 'destroy'])->middleware(['auth:sanctum']);
+Route::get('/videos', [PelisController::class, 'index'])->middleware(['auth:sanctum']);
+Route::get('/videos/{peli}', [PelisController::class, 'show'])->middleware(['auth:sanctum']);
 
