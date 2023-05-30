@@ -30,51 +30,20 @@ class PelisController extends Controller
      */
     public function store(Request $request)
     {
-        
         $validatedData = $request->validate([
-            'id_peliserie' => 'required|numeric',
-            'file' => 'required|mimes:mp4',
+            'id_peliserie' => 'required',
+            'url'      => 'required'
         ]);
-    
-        $peliExist = Pelis::where('id_peliserie', $request->input('id_peliserie'))->first();
-        if ($peliExist) {
-            return response()->json([
-                'success' => false,
-                'message' => 'La peli ya tiene un video asignado'
-            ], 400);
-        }
-    
-        $upload = $request->file('file');
-        $fileName = $upload->getClientOriginalName();
-        $fileSize = $upload->getSize();
-    
-        $uploadName = $fileName;
-        $filePath = $upload->storeAs(
-            'uploads',      // Path
-            $uploadName,    // Filename
-            'public'        // Disk
-        );
-    
-        if (Storage::disk('public')->exists($filePath)) {
-            $fullPath = Storage::disk('public')->path($filePath);
-    
-            $peli = Pelis::create([
-                'id_peliserie' => $request->input('id_peliserie'),
-                'url' => $filePath,
-            ]);
-            $peli->save();
-    
-            return response()->json([
-                'success' => true,
-                'message' => "Peli Creada Correctamente",
-                'data'    => $peli
-            ], 201);
-        } else {
-            return response()->json([
-                'success'  => false,
-                'data' => "Error"
-            ], 421);
-        }
+
+        $Peli = Pelis::create([
+            'id_peliserie' =>$request->input('id_peliserie'),
+            'url' =>$request->input('url')
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data'    => $Peli
+        ], 201);
     }
 
     /**
