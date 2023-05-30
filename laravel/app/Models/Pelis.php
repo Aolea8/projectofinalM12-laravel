@@ -10,7 +10,7 @@ class Pelis extends Model
     use HasFactory;
     protected $table = 'pelis';
     protected $fillable = [
-        'url',
-        'id_peliserie'
+        'id_peliserie',
+        'url'
     ];
 }

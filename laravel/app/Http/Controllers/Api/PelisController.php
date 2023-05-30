@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Pelis;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\ValidationException;
-
 
 class PelisController extends Controller
 {
@@ -34,12 +32,7 @@ class PelisController extends Controller
             'data'    => $pelis
         ], 200);
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -77,10 +70,12 @@ class PelisController extends Controller
                 'id_peliserie' => $request->input('id_peliserie'),
                 'url' => $filePath,
             ]);
+            $peli->save();
             \Log::debug("DB storage OK");
     
             return response()->json([
                 'success' => true,
+                'message' => "Peli Creada Correctamente",
                 'data'    => $peli
             ], 201);
         } else {
