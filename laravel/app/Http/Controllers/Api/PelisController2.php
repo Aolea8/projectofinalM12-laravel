@@ -31,7 +31,26 @@ class PelisController extends Controller
             'file' => 'required|mimes:mp4',
         ]);
     
-        
+        $peliExist = Pelis::where('id_peliserie', $request->input('id_peliserie'))->first();
+        if ($peliExist) {
+            return response()->json([
+                'success' => false,
+                'message' => 'La peli ya tiene un video asignado'
+            ], 400);
+        }
+    
+        $upload = $request->file('file');
+        $fileName = $upload->getClientOriginalName();
+        $fileSize = $upload->getSize();
+    
+        \Log::debug("Storing file '{$fileName}' ($fileSize)...");
+    
+        $uploadName = $fileName;
+        $filePath = $upload->storeAs(
+            'uploads',      // Path
+            $uploadName,    // Filename
+            'public'        // Disk
+        );
     
         if (\Storage::disk('public')->exists($filePath)) {
             \Log::debug("Local storage OK");
