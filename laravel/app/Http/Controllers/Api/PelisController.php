@@ -46,7 +46,7 @@ class PelisController extends Controller
 
         $peli = Peli::create([
             'id_peliserie' => $request->input('id_peliserie'),
-            'url' => $filePath,
+            'url' => $request->input('url'),
         ]);
         $peli->save();
     }
