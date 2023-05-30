@@ -23,15 +23,6 @@ class PelisController extends Controller
             'data'    => $pelis
         ], 200);
     }
-    
-    public function show($id)
-    {
-        $pelis = Pelis::where('id_peliserie', $id)->first();
-        return response()->json([
-            'success' => true,
-            'data'    => $pelis
-        ], 200);
-    }
 
     public function store(Request $request)
     {
@@ -93,6 +84,14 @@ class PelisController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function show($id)
+    {
+        $pelis = Pelis::where('id_peliserie', $id)->first();
+        return response()->json([
+            'success' => true,
+            'data'    => $pelis
+        ], 200);
+    }
     
 
     /**
@@ -117,7 +116,7 @@ class PelisController extends Controller
             $peli->save();
             return response()->json([
                 'success' => true,
-                'data'    => $reserva,
+                'data'    => $peli,
                 'message' => 'Peli actualizada correctamente'
             ], 200);
         } else {
@@ -138,7 +137,7 @@ class PelisController extends Controller
     {
         $peli = Pelis::find($id);
         if ($peli){
-            Pelis::destroy($peli->id);
+            Pelis::destroy($id);
             return response()->json([
                 'success' => true,
                 'message'    => "Peli eliminada correctamente"
