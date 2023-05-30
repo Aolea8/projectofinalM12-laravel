@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\TokenController;
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\CommentController;
-use App\Http\Controllers\Api\VideosController;
+use App\Http\Controllers\Api\VideoController;
 
 
 /*
@@ -29,9 +29,9 @@ Route::get('/user/favorites', [FavoriteController::class, 'index'])->middleware(
 Route::get('/peliserie/{idpeliserie}/comments', [CommentController::class, 'comments']);
 Route::post('/peliserie/{idpeliserie}/comment', [CommentController::class, 'comment'])->middleware(['auth:sanctum']);
 Route::delete('/peliserie/uncomment/{comment}', [CommentController::class, 'uncomment'])->middleware(['auth:sanctum']);
-Route::post('/videos', [VideosController::class, 'store'])->middleware(['auth:sanctum']);
-Route::put('/videos/{peli}', [VideosController::class, 'update'])->middleware(['auth:sanctum']);
-Route::delete('/videos/{peli}', [VideosController::class, 'destroy'])->middleware(['auth:sanctum']);
-Route::get('/videos', [VideosController::class, 'index'])->middleware(['auth:sanctum']);
-Route::get('/videos/{peli}', [VideosController::class, 'show'])->middleware(['auth:sanctum']);
+Route::post('/videos', [VideoController::class, 'store'])->middleware(['auth:sanctum']);
+Route::put('/videos/{peli}', [VideoController::class, 'update'])->middleware(['auth:sanctum']);
+Route::delete('/videos/{peli}', [VideoController::class, 'destroy'])->middleware(['auth:sanctum']);
+Route::get('/videos', [VideoController::class, 'index'])->middleware(['auth:sanctum']);
+Route::get('/videos/{peli}', [VideoController::class, 'show'])->middleware(['auth:sanctum']);
 
