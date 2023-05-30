@@ -40,56 +40,56 @@ class PelisController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-{
-    $validatedData = $request->validate([
-        'id_peliserie' => 'required|numeric',
-        'file' => 'required|mimes:mp4', 
-    ]);
-
-    $peliExist = Pelis::where('id_peliserie', $request->input('idpeliserie'))->first();
-    if ($peliExist) {
-        return response()->json([
-            'success' => false,
-            'message' => 'La peli ya tiene un video asignado'
-        ], 400);
-    }
-
-    $upload = $request->file('file');
-    $fileName = $upload->getClientOriginalName();
-    $fileSize = $upload->getSize();
-
-    \Log::debug("Storing file '{$fileName}' ($fileSize)...");
-
-    $uploadName = $fileName;
-    $filePath = $upload->storeAs(
-        'uploads',      // Path
-        $uploadName ,   // Filename
-        'public'        // Disk
-    );
-
-    if (\Storage::disk('public')->exists($filePath)) {
-        \Log::debug("Local storage OK");
-        $fullPath = \Storage::disk('public')->path($filePath);
-        \Log::debug("File saved at {$fullPath}");
-
-        $peli = Pelis::create([
-            'id_peliserie' => $request->input('id_peliserie'),
-            'url' => $filePath,
+    {
+        $validatedData = $request->validate([
+            'id_peliserie' => 'required|numeric',
+            'file' => 'required|mimes:mp4',
         ]);
-        \Log::debug("DB storage OK");
-
-        return response()->json([
-            'success' => true,
-            'data'    => $peli
-        ], 201);
-    } else {
-        \Log::debug("Local storage FAILS");
-        return response()->json([
-            'success'  => false,
-            'data' => "Error"
-        ], 421);
+    
+        $peliExist = Pelis::where('id_peliserie', $request->input('id_peliserie'))->first();
+        if ($peliExist) {
+            return response()->json([
+                'success' => false,
+                'message' => 'La peli ya tiene un video asignado'
+            ], 400);
+        }
+    
+        $upload = $request->file('file');
+        $fileName = $upload->getClientOriginalName();
+        $fileSize = $upload->getSize();
+    
+        \Log::debug("Storing file '{$fileName}' ($fileSize)...");
+    
+        $uploadName = $fileName;
+        $filePath = $upload->storeAs(
+            'uploads',      // Path
+            $uploadName,    // Filename
+            'public'        // Disk
+        );
+    
+        if (\Storage::disk('public')->exists($filePath)) {
+            \Log::debug("Local storage OK");
+            $fullPath = \Storage::disk('public')->path($filePath);
+            \Log::debug("File saved at {$fullPath}");
+    
+            $peli = Pelis::create([
+                'id_peliserie' => $request->input('id_peliserie'),
+                'url' => $filePath,
+            ]);
+            \Log::debug("DB storage OK");
+    
+            return response()->json([
+                'success' => true,
+                'data'    => $peli
+            ], 201);
+        } else {
+            \Log::debug("Local storage FAILS");
+            return response()->json([
+                'success'  => false,
+                'data' => "Error"
+            ], 421);
+        }
     }
-}
 
     /**
      * Display the specified resource.
