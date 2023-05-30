@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('pelis', function (Blueprint $table) {
             $table->id();
-            $table->id_peliserie();
-            $table->url();
+            $table->unsignedBigInteger('id_peliserie');
+            $table->string('url',255);
             $table->timestamps();
         });
     }
