@@ -19,7 +19,6 @@ class PelisController extends Controller
         return response()->json([
             'success' => true,
             'data'    => $pelis,
-            'message' => "hola"
         ], 200);
     }
 
