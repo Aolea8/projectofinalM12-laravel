@@ -61,7 +61,7 @@ class PelisController extends Controller
             'id_peliserie' => $request->input('id_peliserie'),
             'url' => asset('storage/' . $fileName),
         ]);
-        
+        $peli->save();
         return response()->json([
             'success' => true,
             'data' => $peli
